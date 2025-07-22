@@ -1,0 +1,12 @@
+{
+  "Values": {
+    "AAD_TENANT_ID": "",
+    "CLUSTER_URI": "",
+    "INGESTION_URI": "",
+    "KUSTO_DATABASE": "netdevices",
+    "KUSTO_TABLE": "DeviceInfo",
+    "CLIENT_ID": "",
+    "CLIENT_SECRET": "",
+    "REGION": "southcentralus"
+  }
+}
