@@ -39,17 +39,6 @@ SAMPLE_KUSTO_DATABASE = "Samples"
 SAMPLE_KCSB = KustoConnectionStringBuilder.with_interactive_login(SAMPLE_KUSTO_URI)
 
 class NetKustoClient:
-    """
-    Usage:
-import net_kusto_client
-k_client = net_kusto_client.NetKustoClient()
-k_client.create_sample_table()
-k_client.ingest_sample_data()
-k_client.execute_sample_query()
-k_client.execute_stormevents_sample_query()
-
-.drop table DeviceInfo
-    """
     def __init__(self):
         self.ingest_client = QueuedIngestClient(KCSB_INGEST_DATA)
         self.client = KustoClient(KCSB_DATA)

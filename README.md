@@ -20,5 +20,7 @@ k_client.create_sample_table()
 k_client.ingest_sample_data()
 k_client.execute_sample_query()
 k_client.execute_stormevents_sample_query()
-
 ```
+
+On the kusto database you can delete the table using 
+.drop table DeviceInfo
