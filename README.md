@@ -10,12 +10,15 @@ py -m pip install net-kusto-client
 ```
 
 Please create local.settings.json file in your home folder, you can also copy example.csv to home folder for testing.
+
 ```
 ~/
 ├── local.settings.json
 ├── example.csv
 ```
+
 The client_id in local.settings.json can be either the aad application id or the user-assigned managed identity. The client_secret is used as the application key.
+
 ## Usage
 ```
 import net_kusto_client

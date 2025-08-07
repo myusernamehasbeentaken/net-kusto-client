@@ -55,10 +55,11 @@ class NetKustoClient:
         self.example_ingest_client = QueuedIngestClient(EXAMPLE_INGEST_KCSB_DATA)
         self.storm_events_sample_client = KustoClient(SAMPLE_KCSB)
     
-    def create_table(self, table_name):
+    def create_table(self, table_name, column_names):
         try:
-            CREATE_TABLE_COMMAND  = f""".create table {table_name} (DeviceName: string, OSVersion: string)"""
-            RESPONSE = self.example_client.execute_mgmt(KUSTO_DATABASE, CREATE_TABLE_COMMAND)
+            # Example column_names:str = DeviceName: string, OSVersion: string
+            CREATE_TABLE_COMMAND  = f""".create table {table_name} ({column_names})"""
+            RESPONSE = self.client.execute_mgmt(KUSTO_DATABASE, CREATE_TABLE_COMMAND)
             dataframe_from_result_table(RESPONSE.primary_results[0])
         except KustoServiceError as err:
             print("Error creating table:", err)
@@ -75,7 +76,7 @@ class NetKustoClient:
                     print(f"File {file_path} does not exist.")
                     return
                 file_descriptor = FileDescriptor(str(file_path))
-                self.example_ingest_client.ingest_from_file(file_descriptor, ingestion_properties)
+                self.ingest_client.ingest_from_file(file_descriptor, ingestion_properties)
                 print(f"Ingestion of {file_path} to table deviceinfo in database {KUSTO_DATABASE} initiated successfully.")
         except KustoServiceError as err:
             print("Error ingesting data:", err)
@@ -84,7 +85,7 @@ class NetKustoClient:
         try:
             if table_name:
                 query = f"{table_name} | take 10"
-                response = self.example_client.execute_query(KUSTO_DATABASE, query)
+                response = self.client.execute_query(KUSTO_DATABASE, query)
                 df = dataframe_from_result_table(response.primary_results[0])
                 return df
         except KustoServiceError as err:
@@ -93,7 +94,7 @@ class NetKustoClient:
     def execute_query(self, query):
         try:
             if query:
-                response = self.example_client.execute_query(KUSTO_DATABASE, query)
+                response = self.client.execute_query(KUSTO_DATABASE, query)
                 df = dataframe_from_result_table(response.primary_results[0])
                 return df
         except KustoServiceError as err:
